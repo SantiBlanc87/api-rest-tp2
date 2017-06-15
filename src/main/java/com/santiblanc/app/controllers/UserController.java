@@ -6,6 +6,7 @@ import com.santiblanc.app.entities.User;
 import com.santiblanc.app.persistence.UserDAO;
 import com.santiblanc.app.request.UserRequest;
 import com.santiblanc.app.response.UserWrapper;
+import com.santiblanc.app.util.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +27,8 @@ import java.util.List;
 )
 public class UserController {
    //Autowires
+   @Autowired
+   SessionData sessionData;
     @Autowired
     UserConverter userConverter;
     @Autowired
@@ -57,10 +60,10 @@ public class UserController {
     }
 
     //Borrar Usuario
-    @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable("email") String email){
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    public ResponseEntity deleteUser(@RequestParam("email") String em){
         try {
-            dao.deleteByEmail(email); //AGREGAR VALIDACION PARA VER QUE ERROR TIRAR, SI BAD REQUEST O NOT FOUND
+            dao.deleteByEmail(em); //AGREGAR VALIDACION PARA VER QUE ERROR TIRAR, SI BAD REQUEST O NOT FOUND
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

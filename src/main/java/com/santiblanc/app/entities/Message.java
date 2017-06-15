@@ -14,10 +14,10 @@ public class Message {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User sender;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User receiver;
 
     private Timestamp date;

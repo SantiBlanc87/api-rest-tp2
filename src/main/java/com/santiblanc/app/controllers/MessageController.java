@@ -6,6 +6,7 @@ import com.santiblanc.app.entities.Message;
 import com.santiblanc.app.persistence.MessageDAO;
 import com.santiblanc.app.request.MessageRequest;
 import com.santiblanc.app.response.MessageWrapper;
+import com.santiblanc.app.util.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +27,8 @@ import java.util.List;
 )
 public class MessageController {
     //Autowired
+    @Autowired
+    SessionData sessionData;
     @Autowired
     MessageConverter messageConverter;
     @Autowired
@@ -59,10 +62,34 @@ public class MessageController {
         }
     }
 
-    //Mostrar emails de usuario
-    @RequestMapping(value = "/messages/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<MessageWrapper>> getMsg(@PathVariable("id") Long id){
+    //Mostrar emails recibidos de usuario
+    @RequestMapping(value = "/messages/inbox/{id}", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<List<MessageWrapper>> getInbox(@PathVariable("id") Long id){
         Iterable<Message> list = dao.findByReceiver(id);
+        List<Message> result = Lists.newArrayList(list);
+        if (result.size()>0) {
+            return new ResponseEntity<List<MessageWrapper>>(this.convertList(result), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<MessageWrapper>>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    //Mostrar emails enviados de usuario
+    @RequestMapping(value = "/messages/outbox/{id}", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<List<MessageWrapper>> getOutbox(@PathVariable("id") Long id){
+        Iterable<Message> list = dao.findBySender(id);
+        List<Message> result = Lists.newArrayList(list);
+        if (result.size()>0) {
+            return new ResponseEntity<List<MessageWrapper>>(this.convertList(result), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<MessageWrapper>>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    //Mostrar emails borrados
+    @RequestMapping(value = "/messages/deleted/{id}", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<List<MessageWrapper>> getDeleted(@PathVariable("id") Long id){
+        Iterable<Message> list = dao.findByReceiverAndErased(id,true);
         List<Message> result = Lists.newArrayList(list);
         if (result.size()>0) {
             return new ResponseEntity<List<MessageWrapper>>(this.convertList(result), HttpStatus.OK);

@@ -14,7 +14,7 @@ public class MessageWrapper {
     @JsonProperty("receptor")
     String receiver;
     @JsonProperty("fecha")
-    Timestamp date;
+    String date;
     @JsonProperty("asunto")
     String subject;
     @JsonProperty("mensaje")
@@ -41,11 +41,11 @@ public class MessageWrapper {
         this.receiver = receiver;
     }
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

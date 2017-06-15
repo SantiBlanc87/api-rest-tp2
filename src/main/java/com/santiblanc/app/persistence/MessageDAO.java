@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface MessageDAO extends CrudRepository<Message, Long> {
     List<Message> findByReceiver (Long id);
+    List<Message> findBySender (Long id);
+    List<Message> findByReceiverAndErased (Long id, Boolean bool);
 }
