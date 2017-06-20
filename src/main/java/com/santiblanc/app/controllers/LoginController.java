@@ -28,8 +28,7 @@ public class LoginController {
 
     //Metodos
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public
-    @ResponseBody
+    public @ResponseBody
     ResponseEntity<LoginWrapper> getByEmail(@RequestParam("email") String email, @RequestParam("pass") String pwd) {
         User u = userDAO.findByEmailAndPass(email,pwd);
         if (u != null) {

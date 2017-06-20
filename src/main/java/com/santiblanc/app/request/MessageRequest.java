@@ -8,45 +8,23 @@ import com.santiblanc.app.entities.User;
  */
 public class MessageRequest {
     //Propiedades
-    @JsonProperty("sender")
-    User sender;
     @JsonProperty("receiver")
-    User receiver;
-    @JsonProperty("date")
-    String date;
+    String receiver;
     @JsonProperty("subject")
     String subject;
     @JsonProperty("message")
     String msg;
-    @JsonProperty("erased")
-    boolean status;
 
     //Constructor
     public MessageRequest(){}
 
     //Getters and Setters
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(User receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getSubject() {
@@ -65,11 +43,4 @@ public class MessageRequest {
         this.msg = msg;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }

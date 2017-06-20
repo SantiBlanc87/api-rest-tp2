@@ -3,7 +3,9 @@ package com.santiblanc.app.controllers;
 import com.google.common.collect.Lists;
 import com.santiblanc.app.converter.MessageConverter;
 import com.santiblanc.app.entities.Message;
+import com.santiblanc.app.entities.User;
 import com.santiblanc.app.persistence.MessageDAO;
+import com.santiblanc.app.persistence.UserDAO;
 import com.santiblanc.app.request.MessageRequest;
 import com.santiblanc.app.response.MessageWrapper;
 import com.santiblanc.app.util.SessionData;
@@ -14,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,19 +36,30 @@ public class MessageController {
     @Autowired
     MessageConverter messageConverter;
     @Autowired
-    MessageDAO dao;
+    MessageDAO messageDAO;
+    @Autowired
+    UserDAO userDAO;
 
     //Constructor
-    public MessageController(){}
+    public MessageController() {
+    }
 
     //Metodos
     //Envio un email
-    @RequestMapping(value = "/messages" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity sendMsg(@RequestBody MessageRequest request){
+    @RequestMapping(value = "/messages", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity sendMsg(@RequestBody MessageRequest request, @RequestHeader("email") String email) {
         try {
+            User u = userDAO.findByEmail(email);
+            User receiver = userDAO.findByEmail(request.getReceiver());
+            Date date = new java.util.Date();
+            Timestamp timestamp = new java.sql.Timestamp(date.getTime());
             Message m = new Message();
-            m.setSender(request.getSender());
-            m.setReceiver(request.getReceiver());
+            m.setSender(u);
+            m.setReceiver(receiver);
+            m.setDate(timestamp);
+            m.setSubject(request.getSubject());
+            m.setMsg(request.getMsg());
+            messageDAO.save(m);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -53,21 +68,39 @@ public class MessageController {
 
     //Borro un email
     @RequestMapping(value = "/messages/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteMsg(@PathVariable("id") Long id){
+    public ResponseEntity deleteMsg(@PathVariable("id") Long id, @RequestHeader("email") String email) {
         try {
-            dao.delete(id); //AGREGAR VALIDACION PARA VER QUE ERROR TIRAR, SI BAD REQUEST O NOT FOUND
-            return new ResponseEntity(HttpStatus.OK);
+            User u = userDAO.findByEmail(email);
+            Message m = messageDAO.findOne(id);
+            if (m.getReceiver().equals(u)) {
+
+                m.setErasedByReceiver(true);
+                messageDAO.save(m);
+                return new ResponseEntity(HttpStatus.OK);
+
+            } else if (m.getSender().equals(u)) {
+
+                m.setErasedBySender(true);
+                messageDAO.save(m);
+                return new ResponseEntity(HttpStatus.OK);
+
+            } else {
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
+            }
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     //Mostrar emails recibidos de usuario
-    @RequestMapping(value = "/messages/inbox/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<MessageWrapper>> getInbox(@PathVariable("id") Long id){
-        Iterable<Message> list = dao.findByReceiver(id);
+    @RequestMapping(value = "/messages/inbox", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<List<MessageWrapper>> getInbox(@RequestHeader("email") String email) {
+        User u = userDAO.findByEmail(email);
+        Iterable<Message> list = messageDAO.findByReceiverAndErasedByReceiver(u,false);
         List<Message> result = Lists.newArrayList(list);
-        if (result.size()>0) {
+        if (result.size() > 0) {
             return new ResponseEntity<List<MessageWrapper>>(this.convertList(result), HttpStatus.OK);
         } else {
             return new ResponseEntity<List<MessageWrapper>>(HttpStatus.NO_CONTENT);
@@ -75,11 +108,14 @@ public class MessageController {
     }
 
     //Mostrar emails enviados de usuario
-    @RequestMapping(value = "/messages/outbox/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<MessageWrapper>> getOutbox(@PathVariable("id") Long id){
-        Iterable<Message> list = dao.findBySender(id);
+    @RequestMapping(value = "/messages/outbox", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<List<MessageWrapper>> getOutbox(@RequestHeader("email") String email) {
+        User u = userDAO.findByEmail(email);
+        Iterable<Message> list = messageDAO.findBySenderAndErasedBySender(u,false);
         List<Message> result = Lists.newArrayList(list);
-        if (result.size()>0) {
+        if (result.size() > 0) {
             return new ResponseEntity<List<MessageWrapper>>(this.convertList(result), HttpStatus.OK);
         } else {
             return new ResponseEntity<List<MessageWrapper>>(HttpStatus.NO_CONTENT);
@@ -87,11 +123,14 @@ public class MessageController {
     }
 
     //Mostrar emails borrados
-    @RequestMapping(value = "/messages/deleted/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<MessageWrapper>> getDeleted(@PathVariable("id") Long id){
-        Iterable<Message> list = dao.findByReceiverAndErased(id,true);
+    @RequestMapping(value = "/messages/deleted", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<List<MessageWrapper>> getDeleted(@RequestHeader("email") String email) {
+        User u = userDAO.findByEmail(email);
+        Iterable<Message> list = messageDAO.findBySenderAndErasedBySenderOrReceiverAndErasedByReceiver(u,true,u,true);
         List<Message> result = Lists.newArrayList(list);
-        if (result.size()>0) {
+        if (result.size() > 0) {
             return new ResponseEntity<List<MessageWrapper>>(this.convertList(result), HttpStatus.OK);
         } else {
             return new ResponseEntity<List<MessageWrapper>>(HttpStatus.NO_CONTENT);
@@ -99,9 +138,9 @@ public class MessageController {
     }
 
     //Metodos adicionales
-    private List<MessageWrapper> convertList(List<Message> messages){
+    private List<MessageWrapper> convertList(List<Message> messages) {
         List<MessageWrapper> userWrapperList = new ArrayList<MessageWrapper>();
-        for (Message m: messages) {
+        for (Message m : messages) {
             userWrapperList.add(messageConverter.convert(m));
         }
         return userWrapperList;

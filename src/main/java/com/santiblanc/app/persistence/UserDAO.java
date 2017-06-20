@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Blade-Razer on 6/8/2017.
@@ -17,4 +18,8 @@ public interface UserDAO extends CrudRepository<User, Long> {
     void deleteByEmail(String email);
 
     User findByEmailAndPass(String email, String pass);
+
+    User findByEmail(String email);
+
+    List<User> findByNombre(String nombre);
 }

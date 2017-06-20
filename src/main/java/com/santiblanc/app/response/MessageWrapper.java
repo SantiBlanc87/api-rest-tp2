@@ -1,6 +1,7 @@
 package com.santiblanc.app.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
 
@@ -9,12 +10,14 @@ import java.sql.Timestamp;
  */
 public class MessageWrapper {
     //Propiedades
+    @JsonProperty("id")
+    Long id;
     @JsonProperty("emisor")
     String sender;
     @JsonProperty("receptor")
     String receiver;
     @JsonProperty("fecha")
-    String date;
+    DateTime date;
     @JsonProperty("asunto")
     String subject;
     @JsonProperty("mensaje")
@@ -24,6 +27,14 @@ public class MessageWrapper {
     public MessageWrapper(){}
 
     //Getters and Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getSender() {
         return sender;
@@ -41,11 +52,11 @@ public class MessageWrapper {
         this.receiver = receiver;
     }
 
-    public String getDate() {
+    public DateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 

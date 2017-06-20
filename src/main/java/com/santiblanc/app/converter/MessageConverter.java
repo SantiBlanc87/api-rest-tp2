@@ -14,10 +14,11 @@ public class MessageConverter {
     //Metodos
     public MessageWrapper convert (Message message){
         MessageWrapper m = new MessageWrapper();
+        m.setId(message.getId());
         m.setSender(message.getSender().getEmail());
         m.setReceiver(message.getReceiver().getEmail());
         DateTime date = new DateTime(message.getDate());
-        m.setDate(String.valueOf(date.getDayOfMonth() + '/' + date.getMonthOfYear() + '/' + date.getYear()));
+        m.setDate(date);
         m.setSubject(message.getSubject());
         m.setMsg(message.getMsg());
         return m;

@@ -2,7 +2,9 @@ package com.santiblanc.app.controllers;
 
 import com.google.common.collect.Lists;
 import com.santiblanc.app.converter.UserConverter;
+import com.santiblanc.app.entities.Message;
 import com.santiblanc.app.entities.User;
+import com.santiblanc.app.persistence.MessageDAO;
 import com.santiblanc.app.persistence.UserDAO;
 import com.santiblanc.app.request.UserRequest;
 import com.santiblanc.app.response.UserWrapper;
@@ -26,16 +28,19 @@ import java.util.List;
         produces = MediaType.APPLICATION_JSON_VALUE
 )
 public class UserController {
-   //Autowires
-   @Autowired
-   SessionData sessionData;
+    //Autowires
+    @Autowired
+    SessionData sessionData;
     @Autowired
     UserConverter userConverter;
     @Autowired
-    UserDAO dao;
+    UserDAO userDAO;
+    @Autowired
+    MessageDAO messageDAO;
 
     //Constructor
-    public UserController(){}
+    public UserController() {
+    }
 
     //Metodos
     //Agregar Usuario
@@ -52,7 +57,7 @@ public class UserController {
             u.setProvincia(request.getProvincia());
             u.setPass(request.getPass());
             u.setEmail(request.getEmail());
-            dao.save(u);
+            userDAO.save(u);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,10 +65,21 @@ public class UserController {
     }
 
     //Borrar Usuario
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@RequestParam("email") String em){
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    public ResponseEntity deleteUser(@RequestParam("email") String em) {
         try {
-            dao.deleteByEmail(em); //AGREGAR VALIDACION PARA VER QUE ERROR TIRAR, SI BAD REQUEST O NOT FOUND
+            User u = userDAO.findByEmail(em);
+            Iterable<Message> msgEnviados = messageDAO.findBySender(u);
+            List<Message> listaMsgEnv = Lists.newArrayList(msgEnviados);
+            Iterable<Message> msgRecibidos = messageDAO.findByReceiver(u);
+            List<Message> listaMsgRec = Lists.newArrayList(msgRecibidos);
+            for (Message e: listaMsgEnv){
+                e.setErasedBySender(true);
+            }
+            for (Message r: listaMsgRec){
+                r.setErasedByReceiver(true);
+            }
+            userDAO.deleteByEmail(em); //AGREGAR VALIDACION PARA VER QUE ERROR TIRAR, SI BAD REQUEST O NOT FOUND
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,10 +88,26 @@ public class UserController {
 
     //Traer lista de todos los usuarios
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<UserWrapper>> getAll(){
-        Iterable<User> list = dao.findAll();
+    public
+    @ResponseBody
+    ResponseEntity<List<UserWrapper>> getAll() {
+        Iterable<User> list = userDAO.findAll();
         List<User> result = Lists.newArrayList(list);
-        if (result.size()>0) {
+        if (result.size() > 0) {
+            return new ResponseEntity<List<UserWrapper>>(this.convertList(result), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<UserWrapper>>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    //Traer Usuario por similitud
+    @RequestMapping(value = "/{nombre}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<List<UserWrapper>> getLike(@PathVariable("nombre") String nom) {
+        Iterable<User> list = userDAO.findByNombre(nom);
+        List<User> result = Lists.newArrayList(list);
+        if (result.size() > 0) {
             return new ResponseEntity<List<UserWrapper>>(this.convertList(result), HttpStatus.OK);
         } else {
             return new ResponseEntity<List<UserWrapper>>(HttpStatus.NO_CONTENT);
@@ -83,9 +115,9 @@ public class UserController {
     }
 
     //Metodos adicionales
-    private List<UserWrapper> convertList(List<User> users){
+    private List<UserWrapper> convertList(List<User> users) {
         List<UserWrapper> userWrapperList = new ArrayList<UserWrapper>();
-        for (User u: users) {
+        for (User u : users) {
             userWrapperList.add(userConverter.convert(u));
         }
         return userWrapperList;

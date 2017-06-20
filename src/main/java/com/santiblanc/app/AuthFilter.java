@@ -31,7 +31,7 @@ public class AuthFilter extends OncePerRequestFilter {
         AuthenticationData data = sessionData.getSession(sessionId);
         if (null != data) {
             HeaderMapRequestWrapper requestWrapper = new HeaderMapRequestWrapper(request);
-            requestWrapper.addHeader("usuario", data.getUser().getEmail());
+            requestWrapper.addHeader("email", data.getUser().getEmail());
             filterChain.doFilter(requestWrapper, response);
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());

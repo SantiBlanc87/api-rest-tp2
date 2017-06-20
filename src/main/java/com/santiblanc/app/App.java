@@ -28,7 +28,7 @@ public class App
     public FilterRegistrationBean myFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter((Filter) authFilter);
-        registration.addUrlPatterns("/api*");
+        registration.addUrlPatterns("/api/*");
         return registration;
     }
 
