@@ -299,8 +299,26 @@ public class MessageControllerTest {
                         .header("sessionId", this.sessionId)
                         .header("email", this.u.getEmail())
         )
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isOk());
 
+    }
+
+    @Test
+    public void testDeletedOneSenderSuccess() throws Exception {
+        this.userDAO.save(u);
+        this.userDAO.save(r);
+
+        this.m.setSender(u);
+        this.m.setReceiver(r);
+
+        this.messageDAO.save(m);
+
+        mockMvc.perform(
+                delete("/api/messages/{emailIds}", 1)
+                        .header("sessionId", this.sessionId)
+                        .header("email", this.u.getEmail())
+        )
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -315,6 +333,54 @@ public class MessageControllerTest {
 
         mockMvc.perform(
                 delete("/api/messages/{emailIds}", 9)
+                        .header("sessionId", this.sessionId)
+                        .header("email", this.u.getEmail())
+        )
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void testDeletedFailure() throws Exception {
+        this.userDAO.save(u);
+        this.userDAO.save(r);
+
+        this.m.setSender(r);
+        this.m.setReceiver(r);
+
+        this.messageDAO.save(m);
+
+        mockMvc.perform(
+                delete("/api/messages/{emailIds}", 1)
+                        .header("sessionId", this.sessionId)
+                        .header("email", this.u.getEmail())
+        )
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void testDeletedMultipleSuccess() throws Exception {
+        this.userDAO.save(u);
+        this.userDAO.save(r);
+
+        this.m.setSender(r);
+        this.m.setReceiver(u);
+
+        this.messageDAO.save(m);
+
+        Date date = new java.util.Date();
+        Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+        Message aux = new Message();
+        aux.setSender(u);
+        aux.setReceiver(r);
+        aux.setDate(timestamp);
+        aux.setSubject("TestSubject");
+        aux.setMsg("TestMsg");
+        aux.setErasedByReceiver(false);
+        aux.setErasedBySender(false);
+        this.messageDAO.save(aux);
+
+        mockMvc.perform(
+                delete("/api/messages/{emailIds}", 1,2)
                         .header("sessionId", this.sessionId)
                         .header("email", this.u.getEmail())
         )
