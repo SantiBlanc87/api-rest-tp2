@@ -16,7 +16,8 @@ public class MessageRequest {
     String msg;
 
     //Constructor
-    public MessageRequest(){}
+    public MessageRequest() {
+    }
 
     //Getters and Setters
     public String getReceiver() {

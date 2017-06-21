@@ -25,9 +25,12 @@ public class UserRequest {
     String pass;
     @JsonProperty("email")
     String email;
+    @JsonProperty("recovery")
+    String recoveryEmail;
 
     //Constructor
-    public UserRequest(){}
+    public UserRequest() {
+    }
 
     //Getters and Setters
     public String getNombre() {
@@ -100,5 +103,13 @@ public class UserRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRecoveryEmail() {
+        return recoveryEmail;
+    }
+
+    public void setRecoveryEmail(String recoveryEmail) {
+        this.recoveryEmail = recoveryEmail;
     }
 }

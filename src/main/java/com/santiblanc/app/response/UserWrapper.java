@@ -13,9 +13,14 @@ public class UserWrapper {
     String apellido;
     @JsonProperty("email")
     String email;
+    @JsonProperty("deleted")
+    Boolean status;
+    @JsonProperty("recovery-email")
+    String recovery;
 
     //Constructor
-    public UserWrapper(){}
+    public UserWrapper() {
+    }
 
     //Getters and Setters
 
@@ -41,5 +46,21 @@ public class UserWrapper {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getRecovery() {
+        return recovery;
+    }
+
+    public void setRecovery(String recovery) {
+        this.recovery = recovery;
     }
 }

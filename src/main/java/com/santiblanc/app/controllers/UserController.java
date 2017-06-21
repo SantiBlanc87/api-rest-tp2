@@ -2,14 +2,13 @@ package com.santiblanc.app.controllers;
 
 import com.google.common.collect.Lists;
 import com.santiblanc.app.converter.UserConverter;
-import com.santiblanc.app.entities.Message;
 import com.santiblanc.app.entities.User;
-import com.santiblanc.app.persistence.MessageDAO;
 import com.santiblanc.app.persistence.UserDAO;
 import com.santiblanc.app.request.UserRequest;
+import com.santiblanc.app.response.ErrorWrapper;
 import com.santiblanc.app.response.UserWrapper;
-import com.santiblanc.app.util.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,17 +29,9 @@ import java.util.List;
 public class UserController {
     //Autowires
     @Autowired
-    SessionData sessionData;
-    @Autowired
     UserConverter userConverter;
     @Autowired
     UserDAO userDAO;
-    @Autowired
-    MessageDAO messageDAO;
-
-    //Constructor
-    public UserController() {
-    }
 
     //Metodos
     //Agregar Usuario
@@ -57,8 +48,11 @@ public class UserController {
             u.setProvincia(request.getProvincia());
             u.setPass(request.getPass());
             u.setEmail(request.getEmail());
+            u.setRecoveryEmail(request.getRecoveryEmail());
             userDAO.save(u);
             return new ResponseEntity(HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException e){
+            return new ResponseEntity(new ErrorWrapper("El email solicitado ya ha sido utilizado"),HttpStatus.CONFLICT);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -69,18 +63,13 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestParam("email") String em) {
         try {
             User u = userDAO.findByEmail(em);
-            Iterable<Message> msgEnviados = messageDAO.findBySender(u);
-            List<Message> listaMsgEnv = Lists.newArrayList(msgEnviados);
-            Iterable<Message> msgRecibidos = messageDAO.findByReceiver(u);
-            List<Message> listaMsgRec = Lists.newArrayList(msgRecibidos);
-            for (Message e: listaMsgEnv){
-                e.setErasedBySender(true);
+            if (u != null) {
+                u.setDeleted(true);
+                userDAO.save(u);
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
-            for (Message r: listaMsgRec){
-                r.setErasedByReceiver(true);
-            }
-            userDAO.deleteByEmail(em); //AGREGAR VALIDACION PARA VER QUE ERROR TIRAR, SI BAD REQUEST O NOT FOUND
-            return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -91,12 +80,16 @@ public class UserController {
     public
     @ResponseBody
     ResponseEntity<List<UserWrapper>> getAll() {
-        Iterable<User> list = userDAO.findAll();
-        List<User> result = Lists.newArrayList(list);
-        if (result.size() > 0) {
-            return new ResponseEntity<List<UserWrapper>>(this.convertList(result), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<List<UserWrapper>>(HttpStatus.NO_CONTENT);
+        try {
+            Iterable<User> list = userDAO.findAll();
+            List<User> result = Lists.newArrayList(list);
+            if (result.size() > 0) {
+                return new ResponseEntity<List<UserWrapper>>(this.convertList(result), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<UserWrapper>>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -105,12 +98,15 @@ public class UserController {
     public
     @ResponseBody
     ResponseEntity<List<UserWrapper>> getLike(@PathVariable("nombre") String nom) {
-        Iterable<User> list = userDAO.findByNombre(nom);
-        List<User> result = Lists.newArrayList(list);
-        if (result.size() > 0) {
-            return new ResponseEntity<List<UserWrapper>>(this.convertList(result), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<List<UserWrapper>>(HttpStatus.NO_CONTENT);
+        try {
+            List<User> result = userDAO.findByNombre(nom);
+            if (result.size() > 0) {
+                return new ResponseEntity<List<UserWrapper>>(this.convertList(result), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<UserWrapper>>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

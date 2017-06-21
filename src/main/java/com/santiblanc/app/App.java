@@ -9,15 +9,14 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
 import javax.servlet.Filter;
 
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
 
@@ -33,12 +32,12 @@ public class App
     }
 
     @Bean(name = "messageConverter")
-    public MessageConverter getMessageConverter(){
+    public MessageConverter getMessageConverter() {
         return new MessageConverter();
     }
 
     @Bean(name = "userConverter")
-    public UserConverter getUserConverter(){
+    public UserConverter getUserConverter() {
         return new UserConverter();
     }
 }

@@ -9,10 +9,11 @@ import org.joda.time.DateTime;
  */
 public class MessageConverter {
     //Constructor
-    public MessageConverter(){}
+    public MessageConverter() {
+    }
 
     //Metodos
-    public MessageWrapper convert (Message message){
+    public MessageWrapper convert(Message message) {
         MessageWrapper m = new MessageWrapper();
         m.setId(message.getId());
         m.setSender(message.getSender().getEmail());
@@ -21,6 +22,7 @@ public class MessageConverter {
         m.setDate(date);
         m.setSubject(message.getSubject());
         m.setMsg(message.getMsg());
+        m.setFrom(message.getSender().getNombre() + " " + message.getSender().getApellido());
         return m;
     }
 }

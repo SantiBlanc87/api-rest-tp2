@@ -1,13 +1,16 @@
 com\santiblanc\app\util\SessionData.class
 com\santiblanc\app\util\AuthenticationData.class
+com\santiblanc\app\controllers\NonValidMessageException.class
 com\santiblanc\app\response\UserWrapper.class
 com\santiblanc\app\request\UserRequest.class
 com\santiblanc\app\AuthFilter.class
+com\santiblanc\app\response\ErrorWrapper.class
 com\santiblanc\app\response\LoginWrapper.class
 com\santiblanc\app\response\MessageWrapper.class
 com\santiblanc\app\persistence\UserDAO.class
 com\santiblanc\app\AuthFilter$HeaderMapRequestWrapper.class
 com\santiblanc\app\entities\Message.class
+com\santiblanc\app\util\NonExistingUserException.class
 com\santiblanc\app\App.class
 com\santiblanc\app\entities\User.class
 com\santiblanc\app\controllers\MessageController.class

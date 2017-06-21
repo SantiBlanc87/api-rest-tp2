@@ -10,10 +10,8 @@ public class LoginWrapper {
     @JsonProperty
     String sessionId;
 
-    //Constructores
-    public LoginWrapper(){}
 
-    public LoginWrapper(String id){
+    public LoginWrapper(String id) {
         this.setSessionId(id);
     }
 

@@ -1,0 +1,12 @@
+{
+  "nombre":"TestNombre",
+  "apellido":"TestApellido",
+  "direccion":"TestDireccion",
+  "telefono":"TestTelefono",
+  "ciudad":"TestCiudad",
+  "pais":"TestPais",
+  "provincia":"TestProvincia",
+  "password":"TestPassword",
+  "email":"TestEmail",
+  "recovery":"TestRecuperacion"
+}

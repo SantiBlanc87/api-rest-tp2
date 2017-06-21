@@ -14,15 +14,10 @@ import java.util.List;
  */
 public interface MessageDAO extends CrudRepository<Message, Long> {
 
-    List<Message> findByReceiver (User receiver);
+    List<Message> findBySenderAndErasedBySender(User sender, Boolean bool);
 
-    List<Message> findBySender (User sender);
+    List<Message> findByReceiverAndErasedByReceiver(User receiver, Boolean bool);
 
-    List<Message> findBySenderAndErasedBySender (User sender, Boolean bool);
-
-    List<Message> findByReceiverAndErasedByReceiver (User receiver, Boolean bool);
-
-//    @Modifying
-//    @Query(value = "select * from Messages where (sender_id = ?1 and erased_by_sender = true) and (receiver_id = ?1 and erased_by_receiver = true)", nativeQuery = true)
     List<Message> findBySenderAndErasedBySenderOrReceiverAndErasedByReceiver(User s, Boolean send, User u, Boolean rec);
+
 }

@@ -8,14 +8,17 @@ import com.santiblanc.app.response.UserWrapper;
  */
 public class UserConverter {
     //Constructor
-    public UserConverter(){}
+    public UserConverter() {
+    }
 
     //Metodos
-    public UserWrapper convert (User user){
+    public UserWrapper convert(User user) {
         UserWrapper u = new UserWrapper();
         u.setNombre(user.getNombre());
         u.setApellido(user.getApellido());
         u.setEmail(user.getEmail());
+        u.setStatus(user.getDeleted());
+        u.setRecovery(user.getRecoveryEmail());
         return u;
     }
 }

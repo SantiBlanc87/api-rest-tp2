@@ -1,7 +1,5 @@
 package com.santiblanc.app.entities;
 
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -10,10 +8,10 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "messages")
-public class Message {
+public class Message implements Comparable<Message> {
     //Atributos
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToOne
@@ -22,20 +20,22 @@ public class Message {
     @OneToOne
     private User receiver;
 
-    @Column(name = "date", columnDefinition = "DATETIME")
+    @Column(name = "date", columnDefinition = "datetime")
     private Timestamp date;
     private String subject;
-    @Column(name = "msg", columnDefinition = "TEXT")
     private String msg;
     private boolean erasedBySender;
     private boolean erasedByReceiver;
 
     //Inicializacion de Booleanos
-    {this.setErasedBySender(false);
-    this.setErasedByReceiver(false);}
+    {
+        this.setErasedBySender(false);
+        this.setErasedByReceiver(false);
+    }
 
     //Constructor
-    public Message(){}
+    public Message() {
+    }
 
     //Getters and Setters
     public Long getId() {
@@ -82,19 +82,16 @@ public class Message {
         this.msg = msg;
     }
 
-    public boolean isErasedBySender() {
-        return erasedBySender;
-    }
-
     public void setErasedBySender(boolean erasedBySender) {
         this.erasedBySender = erasedBySender;
     }
 
-    public boolean isErasedByReceiver() {
-        return erasedByReceiver;
-    }
-
     public void setErasedByReceiver(boolean erasedByReceiver) {
         this.erasedByReceiver = erasedByReceiver;
+    }
+
+    @Override
+    public int compareTo(Message o) {
+        return getDate().compareTo(o.getDate());
     }
 }

@@ -8,10 +8,13 @@ C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\ja
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\AuthFilter.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\controllers\LoginController.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\entities\Message.java
+C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\controllers\NonValidMessageException.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\converter\UserConverter.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\entities\User.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\response\LoginWrapper.java
+C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\response\ErrorWrapper.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\controllers\UserController.java
+C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\util\NonExistingUserException.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\App.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\controllers\MessageController.java
 C:\Users\Blade-Razer\Documents\TSSI\Labo 5\API Rest TP2\api-rest-tp2\src\main\java\com\santiblanc\app\request\MessageRequest.java

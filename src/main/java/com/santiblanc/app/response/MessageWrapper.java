@@ -12,6 +12,8 @@ public class MessageWrapper {
     //Propiedades
     @JsonProperty("id")
     Long id;
+    @JsonProperty("de")
+    String from;
     @JsonProperty("emisor")
     String sender;
     @JsonProperty("receptor")
@@ -24,7 +26,8 @@ public class MessageWrapper {
     String msg;
 
     //Constructor
-    public MessageWrapper(){}
+    public MessageWrapper() {
+    }
 
     //Getters and Setters
 
@@ -74,5 +77,13 @@ public class MessageWrapper {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 }

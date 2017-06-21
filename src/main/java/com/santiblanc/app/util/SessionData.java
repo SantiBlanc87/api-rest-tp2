@@ -28,15 +28,20 @@ public class SessionData {
         this.sessionData = new HashMap<String, AuthenticationData>();
     }
 
-    public String addSession(User user) {
+    public String addSession(User user) throws NonExistingUserException {
+
         String sessionId = UUID.randomUUID().toString();
         AuthenticationData aData = new AuthenticationData();
-        aData.setUser(user);
-        aData.setLastAction(new DateTime());
-        this.sessionData.put(sessionId, aData);
-        return sessionId;
-    }
+        if (user.getDeleted() == false) {
+            aData.setUser(user);
+            aData.setLastAction(new DateTime());
+            this.sessionData.put(sessionId, aData);
+            return sessionId;
+        } else {
+            throw new NonExistingUserException("El Usuario solicitado no existe.");
+        }
 
+    }
 
     public void removeSession(String sessionId) {
         sessionData.remove(sessionId);
@@ -45,7 +50,7 @@ public class SessionData {
     public AuthenticationData getSession(String sessionId) {
         AuthenticationData aData = this.sessionData.get(sessionId);
         if (aData != null) {
-                return aData;
+            return aData;
         } else {
             return null;
         }
