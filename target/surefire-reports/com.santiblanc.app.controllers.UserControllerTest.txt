@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.santiblanc.app.controllers.UserControllerTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.548 sec - in com.santiblanc.app.controllers.UserControllerTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.026 sec - in com.santiblanc.app.controllers.UserControllerTest

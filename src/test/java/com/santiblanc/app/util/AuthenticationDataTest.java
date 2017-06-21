@@ -21,6 +21,8 @@ public class AuthenticationDataTest {
 
     private String sessionId;
 
+    private DateTime date;
+
 
     @Before
     public void setup() {
@@ -38,7 +40,7 @@ public class AuthenticationDataTest {
         this.u.setRecoveryEmail("TestRecuperacion");
         this.u.setDeleted(false);
 
-        DateTime date = new DateTime();
+        this.date = new DateTime();
 
         this.authenticationData = new AuthenticationData();
         this.authenticationData.setUser(u);
@@ -68,5 +70,15 @@ public class AuthenticationDataTest {
         test = new SessionData();
         test.sessionData.put(sessionId,null);
         Assert.assertEquals(null,test.getSession(sessionId));
+    }
+
+    @Test
+    public void testAuthDataGetLastAction() {
+        Assert.assertEquals(this.date,this.authenticationData.getLastAction());
+    }
+
+    @Test
+    public void testAuthDataGetUser() {
+        Assert.assertEquals(this.u,this.authenticationData.getUser());
     }
 }

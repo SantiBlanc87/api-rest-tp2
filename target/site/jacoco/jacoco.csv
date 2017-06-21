@@ -15,7 +15,7 @@ api-rest-tp2,com.santiblanc.app,AuthFilter.HeaderMapRequestWrapper,80,0,6,0,19,0
 api-rest-tp2,com.santiblanc.app,App,5,29,0,0,2,7,1,4,1,4
 api-rest-tp2,com.santiblanc.app,AuthFilter,34,3,2,0,9,1,2,1,1,1
 api-rest-tp2,com.santiblanc.app.util,NonExistingUserException,0,4,0,0,0,2,0,1,0,1
-api-rest-tp2,com.santiblanc.app.util,AuthenticationData,6,11,0,0,2,5,2,3,2,3
+api-rest-tp2,com.santiblanc.app.util,AuthenticationData,0,17,0,0,0,7,0,5,0,5
 api-rest-tp2,com.santiblanc.app.util,SessionData,48,62,4,4,9,18,3,7,1,5
 api-rest-tp2,com.santiblanc.app.converter,MessageConverter,0,56,0,0,0,12,0,2,0,2
 api-rest-tp2,com.santiblanc.app.converter,UserConverter,0,29,0,0,0,9,0,2,0,2

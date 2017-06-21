@@ -1,0 +1,1 @@
+Los diagramas fueron realizados por importación de código fuente al Enterprise Architect y luego creados por Namespace.
