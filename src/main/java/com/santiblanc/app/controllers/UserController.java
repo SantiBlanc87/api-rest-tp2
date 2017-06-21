@@ -7,6 +7,7 @@ import com.santiblanc.app.persistence.UserDAO;
 import com.santiblanc.app.request.UserRequest;
 import com.santiblanc.app.response.ErrorWrapper;
 import com.santiblanc.app.response.UserWrapper;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class UserController {
             u.setRecoveryEmail(request.getRecoveryEmail());
             userDAO.save(u);
             return new ResponseEntity(HttpStatus.CREATED);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             return new ResponseEntity(new ErrorWrapper("El email solicitado ya ha sido utilizado"),HttpStatus.CONFLICT);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

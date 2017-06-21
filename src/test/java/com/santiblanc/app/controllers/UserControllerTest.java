@@ -116,6 +116,7 @@ public class UserControllerTest {
     @Test
     public void testAddUserAlreadyMade() throws Exception {
         this.userDAO.save(u);
+
         URL url = Resources.getResource("user.json");
         String json = Resources.toString(url, Charsets.UTF_8);
 

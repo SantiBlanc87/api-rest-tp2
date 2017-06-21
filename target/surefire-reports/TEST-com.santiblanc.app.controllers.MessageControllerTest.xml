@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.santiblanc.app.controllers.MessageControllerTest" time="1.133" tests="14" errors="0" skipped="0" failures="0">
+<testsuite name="com.santiblanc.app.controllers.MessageControllerTest" time="1.19" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_92\jre\bin"/>
@@ -64,18 +64,18 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testDeletedOneReceiverSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.592"/>
-  <testcase name="testSendMsgSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.109"/>
-  <testcase name="testGetInboxNone" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.062"/>
-  <testcase name="testGetDeletedByReceiverSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.107"/>
-  <testcase name="testSendMsgFailure" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.015"/>
-  <testcase name="testDeletedOneSenderSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.032"/>
-  <testcase name="testDeletedMistakeISE" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.015"/>
-  <testcase name="testGetInboxSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.032"/>
-  <testcase name="testDeletedFailure" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.031"/>
-  <testcase name="testGetDeletedBySenderSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.016"/>
-  <testcase name="testGetOutboxNone" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.035"/>
-  <testcase name="testDeletedMultipleSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.024"/>
-  <testcase name="testGetDeletedNone" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.031"/>
-  <testcase name="testGetOutboxSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.032"/>
+  <testcase name="testDeletedOneReceiverSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.612"/>
+  <testcase name="testSendMsgSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.127"/>
+  <testcase name="testGetInboxNone" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.052"/>
+  <testcase name="testGetDeletedByReceiverSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.096"/>
+  <testcase name="testSendMsgFailure" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.016"/>
+  <testcase name="testDeletedOneSenderSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.039"/>
+  <testcase name="testDeletedMistakeISE" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.036"/>
+  <testcase name="testGetInboxSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.033"/>
+  <testcase name="testDeletedFailure" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.032"/>
+  <testcase name="testGetDeletedBySenderSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.032"/>
+  <testcase name="testGetOutboxNone" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.032"/>
+  <testcase name="testDeletedMultipleSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.028"/>
+  <testcase name="testGetDeletedNone" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.016"/>
+  <testcase name="testGetOutboxSuccess" classname="com.santiblanc.app.controllers.MessageControllerTest" time="0.039"/>
 </testsuite>
