@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-
 import com.santiblanc.app.util.AuthenticationData;
 import com.santiblanc.app.util.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;

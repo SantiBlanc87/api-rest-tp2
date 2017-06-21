@@ -105,9 +105,10 @@ public class MessageControllerTest {
     @After
     public void setupAfter() throws Exception {
         this.messageDAO.deleteAll();
-
+        this.m = null;
         this.userDAO.deleteAll();
-
+        this.u = null;
+        this.r = null;
         this.sessionData.removeSession(this.sessionId);
     }
 

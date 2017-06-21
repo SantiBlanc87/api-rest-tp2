@@ -1,0 +1,33 @@
+{
+	"nombre":"Santi",
+	"apellido":"Blanc",
+	"direccion":"Pellegrini 2966",
+	"telefono":"2236174524",
+	"ciudad":"Mar del Plata",
+	"pais":"Argentina",
+	"provincia":"Buenos Aires",
+	"password":"123",
+	"email":"santi@mail.com"
+,	"recovery":"santi@otro.com"}
+{
+	"nombre":"Tito",
+	"apellido":"Puente",
+	"direccion":"Irigoyen 2966",
+	"telefono":"223123456",
+	"ciudad":"Mar del Plata",
+	"pais":"Argentina",
+	"provincia":"Buenos Aires",
+	"password":"123",
+	"email":"tito@mail.com"
+,	"recovery":"tito@otro.com"}
+{
+	"nombre":"Edgar",
+	"apellido":"Poe",
+	"direccion":"Las Heras 2966",
+	"telefono":"223234567",
+	"ciudad":"Mar del Plata",
+	"pais":"Argentina",
+	"provincia":"Buenos Aires",
+	"password":"123",
+	"email":"edgar@mail.com"
+,	"recovery":"edgar@otro.com"}

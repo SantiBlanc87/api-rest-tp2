@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">api-rest-tp2</a> &gt; <a href="index.source.html" class="el_package">com.santiblanc.app</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package com.santiblanc.app;
+
+import com.santiblanc.app.converter.MessageConverter;
+import com.santiblanc.app.converter.UserConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.Filter;
+
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan
+<span class="fc" id="L18">public class App {</span>
+    public static void main(String[] args) {
+<span class="nc" id="L20">        SpringApplication.run(App.class, args);</span>
+<span class="nc" id="L21">    }</span>
+
+    @Autowired
+    AuthFilter authFilter;
+
+    @Bean
+    public FilterRegistrationBean myFilter() {
+<span class="fc" id="L28">        FilterRegistrationBean registration = new FilterRegistrationBean();</span>
+<span class="fc" id="L29">        registration.setFilter((Filter) authFilter);</span>
+<span class="fc" id="L30">        registration.addUrlPatterns(&quot;/api/*&quot;);</span>
+<span class="fc" id="L31">        return registration;</span>
+    }
+
+    @Bean(name = &quot;messageConverter&quot;)
+    public MessageConverter getMessageConverter() {
+<span class="fc" id="L36">        return new MessageConverter();</span>
+    }
+
+    @Bean(name = &quot;userConverter&quot;)
+    public UserConverter getUserConverter() {
+<span class="fc" id="L41">        return new UserConverter();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

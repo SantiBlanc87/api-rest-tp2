@@ -1,0 +1,4 @@
+{
+	"receiver":"tito@mail.com",
+	"subject":"Mail Prueba NO 1",
+	"message":"Lorem Ipsum is simply dummy text of the printing and typesetting industry."}

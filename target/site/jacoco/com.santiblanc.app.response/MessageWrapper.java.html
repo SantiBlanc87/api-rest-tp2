@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">api-rest-tp2</a> &gt; <a href="index.source.html" class="el_package">com.santiblanc.app.response</a> &gt; <span class="el_source">MessageWrapper.java</span></div><h1>MessageWrapper.java</h1><pre class="source lang-java linenums">package com.santiblanc.app.response;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
+
+/**
+ * Created by Blade-Razer on 6/7/2017.
+ */
+public class MessageWrapper {
+    //Propiedades
+    @JsonProperty(&quot;id&quot;)
+    Long id;
+    @JsonProperty(&quot;de&quot;)
+    String from;
+    @JsonProperty(&quot;emisor&quot;)
+    String sender;
+    @JsonProperty(&quot;receptor&quot;)
+    String receiver;
+    @JsonProperty(&quot;fecha&quot;)
+    DateTime date;
+    @JsonProperty(&quot;asunto&quot;)
+    String subject;
+    @JsonProperty(&quot;mensaje&quot;)
+    String msg;
+
+    //Constructor
+<span class="fc" id="L29">    public MessageWrapper() {</span>
+<span class="fc" id="L30">    }</span>
+
+    //Getters and Setters
+
+    public Long getId() {
+<span class="fc" id="L35">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L39">        this.id = id;</span>
+<span class="fc" id="L40">    }</span>
+
+    public String getSender() {
+<span class="fc" id="L43">        return sender;</span>
+    }
+
+    public void setSender(String sender) {
+<span class="fc" id="L47">        this.sender = sender;</span>
+<span class="fc" id="L48">    }</span>
+
+    public String getReceiver() {
+<span class="fc" id="L51">        return receiver;</span>
+    }
+
+    public void setReceiver(String receiver) {
+<span class="fc" id="L55">        this.receiver = receiver;</span>
+<span class="fc" id="L56">    }</span>
+
+    public DateTime getDate() {
+<span class="fc" id="L59">        return date;</span>
+    }
+
+    public void setDate(DateTime date) {
+<span class="fc" id="L63">        this.date = date;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getSubject() {
+<span class="fc" id="L67">        return subject;</span>
+    }
+
+    public void setSubject(String subject) {
+<span class="fc" id="L71">        this.subject = subject;</span>
+<span class="fc" id="L72">    }</span>
+
+    public String getMsg() {
+<span class="fc" id="L75">        return msg;</span>
+    }
+
+    public void setMsg(String msg) {
+<span class="fc" id="L79">        this.msg = msg;</span>
+<span class="fc" id="L80">    }</span>
+
+    public String getFrom() {
+<span class="fc" id="L83">        return from;</span>
+    }
+
+    public void setFrom(String from) {
+<span class="fc" id="L87">        this.from = from;</span>
+<span class="fc" id="L88">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
